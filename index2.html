@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GST Calculator</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      background-color: #f0f8ff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h2 {
+      color: #1565c0;
+      background-color: #e3f2fd;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .gst-box {
+      background-color: #e1f5fe;
+      display: inline-block;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    input, select {
+      width: 90%;
+      padding: 8px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    button {
+      background-color: #1565c0;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0d47a1;
+    }
+    .result p {
+      margin: 5px 0;
+      font-weight: bold;
+      color: #004d40;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>GST Calculator</h2>
+
+  <div class="gst-box">
+    <label>Amount:</label><br>
+    <input type="number" id="amount" placeholder="Enter amount" min="0"><br>
+
+    <label>GST (%):</label><br>
+    <select id="gst">
+      <option value="3">3%</option>
+      <option value="5">5%</option>
+      <option value="12">12%</option>
+      <option value="18">18%</option>
+      <option value="28">28%</option>
+    </select><br>
+
+    <div class="result">
+      <p id="actual">Actual Amount: 0.00</p>
+      <p id="gstAmount">GST: 0.00</p>
+      <p id="total">Total: 0.00</p>
+    </div>
+
+    <button id="reset">Reset</button>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+      $("#gst, #amount").on("change keyup", function(){
+        let amount = parseFloat($("#amount").val());
+        let gstRate = parseFloat($("#gst").val());
+        
+        if(!isNaN(amount)){
+          let gstValue = (amount * gstRate) / 100;
+          let total = amount + gstValue;
+          
+          $("#actual").text("Actual Amount: " + amount.toFixed(2));
+          $("#gstAmount").text("GST: " + gstValue.toFixed(2));
+          $("#total").text("Total: " + total.toFixed(2));
+        }
+      });
+
+      $("#reset").click(function(){
+        $("#amount").val("");
+        $("#gst").val("3");
+        $("#actual").text("Actual Amount: 0.00");
+        $("#gstAmount").text("GST: 0.00");
+        $("#total").text("Total: 0.00");
+      });
+    });
+  </script>
+
+</body>
+</html>
